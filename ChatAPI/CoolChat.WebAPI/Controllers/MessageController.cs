@@ -31,10 +31,8 @@ public class MessageController(
             return UnprocessableEntity(validationResult);
 
         var message = mapper.Map<Message>(dto);
-        var dbMessage = await service.SendMessage(message);
+        await chatHub.SendMessageAsync(message.Username, message.Content);
         
-        await chatHub.SendMessageAsync(dbMessage.Username, dbMessage.Content);
-        
-        return Ok(dbMessage);
+        return Ok(message);
     }
 }

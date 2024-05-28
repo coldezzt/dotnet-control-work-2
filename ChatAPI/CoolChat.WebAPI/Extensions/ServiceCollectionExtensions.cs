@@ -5,6 +5,7 @@ using CoolChat.Domain.Abstractions.Services;
 using CoolChat.Infrastructure;
 using CoolChat.Infrastructure.Repositories;
 using CoolChat.WebAPI.Configurations.Mapper;
+using CoolChat.WebAPI.Controllers.Hubs;
 using CoolChat.WebAPI.Dto;
 using CoolChat.WebAPI.Dto.Validators;
 using FluentValidation;
@@ -29,6 +30,7 @@ public static class ServiceCollectionExtensions
     
     public static IServiceCollection AddServices(this IServiceCollection services)
     {
+        services.AddScoped<ChatHub>();
         services.AddScoped<IMessageService, MessageService>();
 
         return services;
