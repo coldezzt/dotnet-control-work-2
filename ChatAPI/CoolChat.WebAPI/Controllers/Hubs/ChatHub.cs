@@ -24,5 +24,7 @@ public class ChatHub(ApplicationDbContext db) : Hub
         
         if (Clients is not null)
             await Clients.All.SendAsync("ReceiveMessage", m);
+        
+        Console.WriteLine(m.ToString());
     }
 }
