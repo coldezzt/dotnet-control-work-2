@@ -5,10 +5,7 @@ namespace CoolChat.Domain.Entities;
 public class Message : IEntity
 {
     public long Id { get; set; }
-    
-    public long AuthorId { get; set; }
-    public User Author { get; set; }
-    
+    public string Username { get; set; }
     public string Content { get; set; }
 }
 

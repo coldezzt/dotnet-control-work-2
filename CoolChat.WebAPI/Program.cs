@@ -1,16 +1,29 @@
+using CoolChat.WebAPI.Controllers.Hubs;
+using CoolChat.WebAPI.Extensions;
+
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services
+    .AddConfiguredDatabase()
+    .AddServices()
+    .AddRepositories()
+    .AddValidators()
+    .AddConfiguredSignalR()
+    .AddConfiguredSwaggerGen()
+    .AddConfiguredAutoMapper();
 
-var app = builder.Build();
+builder.Services
+    .AddControllers();
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+var application = builder.Build();
 
-app.UseHttpsRedirection();
+application
+    .UseSwagger()
+    .UseSwaggerUI();
 
-app.Run();
+application.UseHttpsRedirection();
+
+application.MapControllers();
+application.MapHub<ChatHub>("/chat");
+
+application.Run();
