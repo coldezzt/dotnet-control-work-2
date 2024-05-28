@@ -11,7 +11,7 @@ public class ChatHub(ApplicationDbContext db) : Hub
         Clients.Caller.SendAsync("LoadHistory", db.Messages).Wait();
         return base.OnConnectedAsync();
     }
-
+    
     public async Task SendMessage(string username, string message)
     {
         var m = new Message

@@ -24,6 +24,6 @@ application
 application.UseHttpsRedirection();
 
 application.MapControllers();
-application.MapHub<ChatHub>("/chat");
+application.MapHub<ChatHub>("/chat/signalr");
 
 application.Run();
