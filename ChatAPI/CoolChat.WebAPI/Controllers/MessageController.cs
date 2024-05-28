@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using CoolChat.Domain.Abstractions.Services;
 using CoolChat.Domain.Entities;
+using CoolChat.WebAPI.Controllers.Hubs;
 using CoolChat.WebAPI.Dto;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
@@ -11,6 +12,7 @@ namespace CoolChat.WebAPI.Controllers;
 [Route("/api/[controller]")]
 public class MessageController(
     IMapper mapper,
+    ChatHub chatHub,
     IMessageService service,
     IValidator<MessageDto> validator) : ControllerBase
 {
@@ -30,6 +32,9 @@ public class MessageController(
 
         var message = mapper.Map<Message>(dto);
         var dbMessage = await service.SendMessage(message);
+        
+        await chatHub.SendMessageAsync(dbMessage.Username, dbMessage.Content);
+        
         return Ok(dbMessage);
     }
 }

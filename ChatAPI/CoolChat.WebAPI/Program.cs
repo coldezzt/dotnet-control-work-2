@@ -12,6 +12,8 @@ builder.Services
     .AddConfiguredSwaggerGen()
     .AddConfiguredAutoMapper();
 
+builder.Services.AddSingleton<ChatHub>();
+
 builder.Services
     .AddControllers();
 
@@ -24,6 +26,6 @@ application
 application.UseHttpsRedirection();
 
 application.MapControllers();
-application.MapHub<ChatHub>("/chat/signalr");
+application.MapHub<ChatHub>("/chat");
 
 application.Run();

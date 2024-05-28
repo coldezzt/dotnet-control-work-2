@@ -12,7 +12,7 @@ public class ChatHub(ApplicationDbContext db) : Hub
         return base.OnConnectedAsync();
     }
     
-    public async Task SendMessage(string username, string message)
+    public async Task SendMessageAsync(string username, string message)
     {
         var m = new Message
         {
@@ -21,6 +21,8 @@ public class ChatHub(ApplicationDbContext db) : Hub
         };
         
         db.Messages.Add(m);
-        await Clients.All.SendAsync("ReceiveMessage", username, message);
+        
+        if (Clients is not null)
+            await Clients.All.SendAsync("ReceiveMessage", m);
     }
 }

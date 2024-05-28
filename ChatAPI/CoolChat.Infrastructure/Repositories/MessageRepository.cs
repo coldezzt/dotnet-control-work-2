@@ -12,7 +12,6 @@ public class MessageRepository(ApplicationDbContext dbContext) : IMessageReposit
 
     public Task<Message> SendMessage(Message m)
     {
-        m.Id = dbContext.Messages.Count; // Имитация присвоения индекса в БД
         dbContext.Messages.Add(m);
         return Task.FromResult(m);
     }
